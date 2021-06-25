@@ -1,3 +1,4 @@
+
 // Paramètres de configuration 
 const GAME_WIDTH = 192;
 const GAME_HEIGHT = 576;
@@ -15,7 +16,7 @@ var config = {
         }
     },
     scale: {
-        zoom: 4
+        zoom: 3
     },
     scene: {
         preload: preload,
@@ -28,8 +29,12 @@ const game = new Phaser.Game(config);
 let player;
 let ObjectLayer;
 let CarsLayer;
+let TrainLayer;
 let cars;
+let cursors;
+let coins, lingots, trains;
 let camera;
+let text, coinScore;
 let keyUp, keyDown, keyRight, keyLeft;
 const CARS_SPEED = 50;
 const TRAIN_SPEED = 400;
@@ -51,11 +56,12 @@ function preload() {
     this.load.image('VoitureVerte', 'assets/images/voiture_verte.png');
     this.load.image('VoitureRouge', 'assets/images/voiture_rouge.png');
     this.load.image('Train', 'assets/images/train.png');
-
+    this.load.image('gameover', 'assets/images/gameover.png')
 
     // Audio
     this.load.audio("background", ["assets/audio/background.mp3"]);
     this.load.audio("ding", ["assets/audio/ding.wav"]);
+    this.load.audio("hit", ["assets/audio/hit.wav"]);
     this.load.audio("train_horn", ["assets/audio/train_horn.mp3"]);
 
     // Load player animations from the player spritesheet and atlas JSON
@@ -66,8 +72,8 @@ function preload() {
 
 function collectCoin(player, coin) {
     coin.destroy(coin.x, coin.y); // remove the tile/coin
-    //coinScore ++; // increment the score
-    //text.setText(`Coins: ${coinScore}x`); // set the text to show the current score
+    coinScore += 20; // increment the score
+    text.setText(`Coins: ${coinScore}x`); // set the text to show the current score
     this.sound.play("ding");
     return false;
 }
@@ -77,12 +83,14 @@ function collectLingot(player, lingot){
 }
 
 function gameOver(player, cars){
-    console.log(player.y);
-    let gameOverText = this.add.text(0, player.y, 'GAME\nOVER', { fontSize: '32px', fill: '#000' });
+    //let gameOverText = this.add.text(0, player.y, 'GAME\nOVER', { fontSize: '64px', fill: '#fff' });
 
     audio_background.stop();
-    this.scene.pause();
-    //this.scene.restart();
+    this.sound.play("hit");
+    this.scene.restart();
+    //this.scene.start('GameOverScene')
+    //this.scene.pause();
+    //let img = this.add.image(0, 0, 'gameover');  
 }
 
 function create(){
@@ -153,6 +161,16 @@ function create(){
         trains.push(train);
         train.body.velocity.x = TRAIN_SPEED;
     });
+
+    coinScore = 0;
+    // text score
+    text = this.add.text(7, 7, `Coins: ${coinScore}`, {
+        fontFamily: 'HAMLIN',
+        fontSize: '12px',
+        fill: '#ffffff',
+        stroke: 5
+      });
+      text.setScrollFactor(0);
 
 
 
@@ -281,3 +299,16 @@ function update(time, delta){
 
     camera.centerOn(player.x, player.y);     // Centrage de la caméra sur le player
 }
+
+
+
+
+
+
+
+
+/*
+NOTE POUR FUTUR TOI :
+- Crée un deuxième niveau et connecte les entre eux dans les deux sens
+- Crée un petit menu, bon courage pour te rappeller de toutes les fonctions
+*/
