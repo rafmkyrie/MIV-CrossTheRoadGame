@@ -6,7 +6,7 @@
 George est un petit garçon qui s’est égaré loin de son domicile, son but est de rentrer chez lui. Pour ce faire, George doit traverser plein de routes et de rails tout en collectant le maximum de pièces et en évitant les véhicules qui passent à toute vitesse! 
 
 # Indications & Commentaires
-- Avant d’exécuter le jeu, assurez vous de bien avoir ajouté phaser.js dans le dossier du jeu, et d’avoir remplacé l’extension du fichier main.txt en main.js. <br>
+- Avant d’exécuter le jeu, assurez vous de bien avoir phaser.js dans le dossier du jeu. <br>
 - Pour lancer le jeu depuis le menu, appuyez sur Entrer. <br>
 - Pour terminer un niveau et passer au suivant, il faut arriver tout au bout de la map et collecter les lingots.<br>
 - Une collision avec une voiture ou un train vous fait recommencer le niveau actuel depuis le départ.<br>
